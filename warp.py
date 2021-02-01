@@ -205,54 +205,20 @@ def time_to_text(time, month_use=True, week_use=True):
     time -= int(minutes) / (365.2425 * 24 * 60)
     seconds = str(int(time * 365.2425 * 24 * 60 * 60 * 100) / 100)
 
-    if years == "1":
-        years += " year "
-    elif years == "0":
-        years = ""
-    else:
-        years += " years "
+    time_text = [years, months, weeks, days, hours, minutes, seconds]
+    words = ("year", "month", "week", "day", "hour", "minute", "second")
 
-    if months == "1":
-        months += " month "
-    elif months == "0":
-        months = ""
-    else:
-        months += " months "
+    for i in range(len(time_text)):
+        if time_text[i] == "0":
+            time_text[i] = ""
+            break
+        time_text[i] += " "
+        time_text[i] += words[i]
+        if time_text[i] != "1":
+            time_text[i] += "s"
+        time_text[i] += " "
 
-    if weeks == "1":
-        weeks += " week "
-    elif weeks == "0":
-        weeks = ""
-    else:
-        weeks += " weeks "
-
-    if days == "1":
-        days += " day "
-    elif days == "0":
-        days = ""
-    else:
-        days += " days "
-
-    if hours == "1":
-        hours += " hour "
-    elif hours == "0":
-        hours = ""
-    else:
-        hours += " hours "
-
-    if minutes == "1":
-        minutes += " minute "
-    elif minutes == "0":
-        minutes = ""
-    else:
-        minutes += " minutes "
-
-    if seconds == "1":
-        seconds += " second"
-    elif seconds == "0" or seconds == "0.0":
-        seconds = ""
-    else:
-        seconds += " seconds"
+    years, months, weeks, days, hours, minutes, seconds = time_text
 
     return(years + months + weeks + days + hours + minutes + seconds)
 
