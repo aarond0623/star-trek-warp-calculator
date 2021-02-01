@@ -3,6 +3,7 @@
 from __future__ import division, print_function
 import sys
 import tkinter as tk
+from tkinter import ttk
 
 
 def warp_to_c(warp, digits=15, tos=False):
@@ -259,6 +260,12 @@ def time_to_text(time, month_use=True, week_use=True):
 class MainApplication(tk.Frame):
     def __init__(self, parent, *args, **kwargs):
         tk.Frame.__init__(self, parent, *args, **kwargs)
+        style = ttk.Style()
+        style.map("C.TButton",
+            foreground=[('pressed', 'red'), ('active', 'blue')],
+            background=[('pressed', '!disabled', 'black'),
+                          ('active', 'white')]
+            )
         self.parent = parent
 
         self.digits = 3
@@ -269,10 +276,10 @@ class MainApplication(tk.Frame):
         self._warp.grid(row=0, column=1)
         self.tos_values = {"TNG": False, "TOS": True}
         self.tos = tk.StringVar()
-        self._tos = tk.OptionMenu(self.parent, self.tos,
+        self._tos = ttk.OptionMenu(self.parent, self.tos,
+                                  "TNG",
                                   *self.tos_values.keys())
         self._tos.config(width=7)
-        self.tos.set(list(self.tos_values.keys())[0])
         self._tos.grid(row=0, column=2)
 
         tk.Label(self.parent, text="Speed:").grid(row=1, column=0)
@@ -281,10 +288,10 @@ class MainApplication(tk.Frame):
         self._lightspeed.grid(row=1, column=1)
         self.speed_values = {"Speed of Light (c)": 1, "km/s": 299792.458}
         self.speed = tk.StringVar()
-        self._speed = tk.OptionMenu(self.parent, self.speed,
+        self._speed = ttk.OptionMenu(self.parent, self.speed,
+                                    "Speed of Light (c)",
                                     *self.speed_values.keys())
         self._speed.config(width=15)
-        self.speed.set(list(self.speed_values.keys())[0])
         self._speed.grid(row=1, column=2)
 
         tk.Label(self.parent, text="Time:").grid(row=2, column=0)
@@ -299,10 +306,10 @@ class MainApplication(tk.Frame):
                               "Minutes": (365.2425 * 24 * 60),
                               "Seconds": (365.2425 * 24 * 60 * 60)}
         self.t_unit = tk.StringVar()
-        self._t_unit = tk.OptionMenu(self.parent, self.t_unit,
+        self._t_unit = ttk.OptionMenu(self.parent, self.t_unit,
+                                        "Days",
                                         *self.t_unit_values.keys())
         self._t_unit.config(width=8)
-        self.t_unit.set(list(self.t_unit_values.keys())[3])
         self._t_unit.grid(row=2, column=2)
 
         tk.Label(self.parent, text="Distance:").grid(row=3, column=0)
@@ -314,10 +321,10 @@ class MainApplication(tk.Frame):
                               "AU": 63241.08,
                               "Kilometers": 9460730777119.56}
         self.d_unit = tk.StringVar()
-        self._d_unit = tk.OptionMenu(self.parent, self.d_unit,
+        self._d_unit = ttk.OptionMenu(self.parent, self.d_unit,
+                                     "Lightyears",
                                      *self.d_unit_values.keys())
         self._d_unit.config(width=10)
-        self.d_unit.set(list(self.d_unit_values.keys())[1])
         self._d_unit.grid(row=3, column=2)
 
         tk.Label(self.parent, text="Calculate:").grid(row=4, column=0)
@@ -327,13 +334,13 @@ class MainApplication(tk.Frame):
                               "Distance": self.max_dist,
                               "Required Warp": self.min_warp}
         self.choice = tk.StringVar()
-        self._choice = tk.OptionMenu(self.parent, self.choice,
+        self._choice = ttk.OptionMenu(self.parent, self.choice,
+                                     "Speed",
                                      *self.choice_values.keys())
         self._choice.config(width=13)
-        self.choice.set(list(self.choice_values.keys())[1])
         self._choice.grid(row=4, column=1)
 
-        self._submit = tk.Button(self.parent, text="Submit",
+        self._submit = ttk.Button(self.parent, text="Submit",
                                  command=self.submit)
         self._submit.grid(row=4, column=2)
 
